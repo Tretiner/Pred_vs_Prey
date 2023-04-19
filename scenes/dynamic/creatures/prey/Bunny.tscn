@@ -1,0 +1,11 @@
+[gd_scene load_steps=4 format=3 uid="uid://hjutmlfqpbpv"]
+
+[ext_resource type="PackedScene" uid="uid://d0cwtiiuvpc1u" path="res://scenes/dynamic/creatures/Creature.tscn" id="1_6yrnp"]
+[ext_resource type="Script" path="res://scripts/sim/creatures/prey/Bunny.gd" id="2_8tr4h"]
+[ext_resource type="Texture2D" uid="uid://dynk26ey7fud6" path="res://assets/images/creatures/bunny.svg" id="3_2rxp0"]
+
+[node name="Bunny" instance=ExtResource("1_6yrnp")]
+script = ExtResource("2_8tr4h")
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("3_2rxp0")

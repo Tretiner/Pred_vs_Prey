@@ -1,0 +1,154 @@
+[gd_scene load_steps=13 format=3 uid="uid://b0s4ekp1ncolh"]
+
+[ext_resource type="Script" path="res://scripts/sim/SimRoot.gd" id="1_e6ukd"]
+[ext_resource type="Script" path="res://scripts/sim/Sim.gd" id="1_h2d5g"]
+[ext_resource type="FontFile" uid="uid://c0l506j8o7l74" path="res://assets/fonts/Hardpixel-nn51.otf" id="2_c7xo8"]
+[ext_resource type="Texture2D" uid="uid://dynk26ey7fud6" path="res://assets/images/creatures/bunny.svg" id="3_i1lij"]
+[ext_resource type="Texture2D" uid="uid://dv07wg651vbm5" path="res://assets/images/ui/skip_next.svg" id="3_pytci"]
+[ext_resource type="Texture2D" uid="uid://dxqamyo0i38fg" path="res://assets/images/ui/pause.svg" id="4_c8gpu"]
+[ext_resource type="Texture2D" uid="uid://bxkvxa6ruesxe" path="res://assets/images/creatures/bunny_disabled.svg" id="4_ffype"]
+[ext_resource type="Texture2D" uid="uid://bqwueajceldej" path="res://assets/images/creatures/molf.svg" id="4_ukadd"]
+[ext_resource type="Texture2D" uid="uid://da1cjg7ba0pel" path="res://assets/images/ui/play.svg" id="5_w2fxw"]
+[ext_resource type="Texture2D" uid="uid://upuvtddq5aj1" path="res://assets/images/creatures/molf_disabled.svg" id="6_c8suv"]
+[ext_resource type="Script" path="res://scripts/controls/TextSlider.gd" id="10_peaj4"]
+[ext_resource type="Texture2D" uid="uid://dty1cbe7ielpo" path="res://assets/images/ui/replay.svg" id="12_bdoby"]
+
+[node name="Root" type="MarginContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+script = ExtResource("1_e6ukd")
+
+[node name="UI" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Left" type="VBoxContainer" parent="UI"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="-1" type="HSeparator" parent="UI/Left"]
+layout_mode = 2
+
+[node name="SeedLabel" type="Label" parent="UI/Left"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+tooltip_text = "Seed"
+theme_override_colors/font_color = Color(1, 1, 1, 0.470588)
+theme_override_fonts/font = ExtResource("2_c7xo8")
+theme_override_font_sizes/font_size = 14
+text = "RANDOM"
+
+[node name="-2" type="HSeparator" parent="UI/Left"]
+layout_mode = 2
+
+[node name="TickPanel" type="VBoxContainer" parent="UI/Left"]
+layout_mode = 2
+
+[node name="TickLabel" type="Label" parent="UI/Left/TickPanel"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_fonts/font = ExtResource("2_c7xo8")
+theme_override_font_sizes/font_size = 16
+text = "Tick: 1"
+
+[node name="StepPanel" type="HBoxContainer" parent="UI/Left/TickPanel"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Prev" type="TextureButton" parent="UI/Left/TickPanel/StepPanel"]
+layout_mode = 2
+texture_normal = ExtResource("3_pytci")
+flip_h = true
+
+[node name="StartStop" type="TextureButton" parent="UI/Left/TickPanel/StepPanel"]
+layout_mode = 2
+toggle_mode = true
+texture_normal = ExtResource("4_c8gpu")
+texture_pressed = ExtResource("5_w2fxw")
+
+[node name="Next" type="TextureButton" parent="UI/Left/TickPanel/StepPanel"]
+layout_mode = 2
+texture_normal = ExtResource("3_pytci")
+
+[node name="-3" type="HSeparator" parent="UI/Left"]
+layout_mode = 2
+
+[node name="TurnPanel" type="HBoxContainer" parent="UI/Left"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Turn1" type="TextureButton" parent="UI/Left/TurnPanel"]
+layout_mode = 2
+button_mask = 0
+texture_normal = ExtResource("3_i1lij")
+texture_disabled = ExtResource("4_ffype")
+
+[node name=">>" type="Label" parent="UI/Left/TurnPanel"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(1, 1, 1, 0.470588)
+theme_override_fonts/font = ExtResource("2_c7xo8")
+theme_override_font_sizes/font_size = 16
+text = ">>"
+
+[node name="Turn2" type="TextureButton" parent="UI/Left/TurnPanel"]
+layout_mode = 2
+disabled = true
+button_mask = 0
+texture_normal = ExtResource("4_ukadd")
+texture_disabled = ExtResource("6_c8suv")
+
+[node name="-4" type="HSeparator" parent="UI/Left"]
+layout_mode = 2
+
+[node name="SpeedSlider" type="Label" parent="UI/Left"]
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 0
+mouse_force_pass_scroll_events = false
+mouse_default_cursor_shape = 10
+theme_override_fonts/font = ExtResource("2_c7xo8")
+text = "< Spd: 1.0 >"
+script = ExtResource("10_peaj4")
+template = "< Spd: %.1f >"
+maxValue = 128.0
+pixelsPerPoint = 4.0
+
+[node name="-5" type="HSeparator" parent="UI/Left"]
+layout_mode = 2
+
+[node name="SimContainer" type="Control" parent="UI"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Sim" type="Node2D" parent="UI/SimContainer"]
+script = ExtResource("1_h2d5g")
+backgroundColor = Color(0, 0, 0, 0)
+borderColor = Color(0.411765, 0.411765, 0.411765, 1)
+
+[node name="Right" type="VBoxContainer" parent="UI"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+
+[node name="Button" type="TextureButton" parent="UI/Right"]
+layout_mode = 2
+size_flags_horizontal = 0
+texture_normal = ExtResource("12_bdoby")
+
+[connection signal="on_tick" from="." to="UI/SimContainer/Sim" method="_on_tick"]
+[connection signal="toggled" from="UI/Left/TickPanel/StepPanel/StartStop" to="." method="_on_start_stop_toggled"]
+[connection signal="pressed" from="UI/Left/TickPanel/StepPanel/Next" to="." method="_on_skip_next_pressed"]
+[connection signal="on_drag_end" from="UI/Left/SpeedSlider" to="." method="_on_speed_slider_on_drag_end"]
+[connection signal="resized" from="UI/SimContainer" to="UI/SimContainer/Sim" method="_on_game_resized"]
+[connection signal="pressed" from="UI/Right/Button" to="." method="_on_button_pressed"]

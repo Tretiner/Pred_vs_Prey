@@ -1,0 +1,11 @@
+[gd_scene load_steps=4 format=3 uid="uid://bpcq0iq2vwjem"]
+
+[ext_resource type="PackedScene" uid="uid://d0cwtiiuvpc1u" path="res://scenes/dynamic/creatures/Creature.tscn" id="1_7l2ca"]
+[ext_resource type="Script" path="res://scripts/sim/creatures/pred/Folf.gd" id="2_17upg"]
+[ext_resource type="Texture2D" uid="uid://k0hpecf0j8bf" path="res://assets/images/creatures/folf.svg" id="3_yi0ol"]
+
+[node name="Creature" instance=ExtResource("1_7l2ca")]
+script = ExtResource("2_17upg")
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("3_yi0ol")
