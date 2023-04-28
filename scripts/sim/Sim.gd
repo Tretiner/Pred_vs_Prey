@@ -1,17 +1,22 @@
 extends Node2D
 
+signal _on_target_update(target: Creature)
 
 signal _on_board_resized
 
-signal _on_prey_tick
-signal _on_pred_tick
+signal _on_prey_tick(tickCount: int)
+signal _on_pred_tick(tickCount: int)
 
 
 @export var rows := Global.gridSize.y
 @export var columns := Global.gridSize.x
-@export var min_square_size := Global.minSquareSize
+@export var minSquareSize := Global.minSquareSize
 @export var backgroundColor := Color.hex(0x82A327)
 @export var borderColor := Color.hex(0x555555)
+
+
+var tilesCount = rows * columns
+var creaturesCount := 1
 
 
 @onready var target: Creature = null
@@ -30,25 +35,30 @@ signal _on_pred_tick
 
 func _ready():
 	DisplayServer.window_set_min_size(Vector2i(
-		floor(120 + 120 + min_square_size * columns + Global.marginX * 2 * 2),
-		floor(min_square_size * rows + Global.marginY * 2)
+		floor(120 + 120 + minSquareSize * columns + Global.marginX * 2 * 2),
+		floor(minSquareSize * rows + Global.marginY * 2)
 	))
 
 	creatures.init(rows, columns)
 
 	var creatureNames: Array[String] = []
 
-	for i in randi_range(2, Global.maxBunnies): creatureNames.append("bunny")
-	for i in randi_range(2, Global.maxMolfs): creatureNames.append("molf")
-	for i in randi_range(2, Global.maxFolfs): creatureNames.append("folf")
+	var bunniesCount = randi_range(2, Global.maxBunnies)
+	var molfsCount = randi_range(2, Global.maxMolfs)
+	var folfsCount = randi_range(2, Global.maxFolfs)
+
+	for i in bunniesCount: creatureNames.append("bunny")
+	for i in molfsCount: creatureNames.append("molf")
+	for i in folfsCount: creatureNames.append("folf")
+
+	creaturesCount = creatureNames.size()
 
 	creatureNames.shuffle()
-
 	for i in creatureNames.size():
 		var randRow := randi_range(0, rows-1)
 		var randColumn := randi_range(0, columns-1)
 
-		if i >= rows * columns:
+		if i >= tilesCount:
 			print("No more space")
 			break;
 
@@ -93,7 +103,7 @@ func find_square_size() -> float:
 			parentSize.x / columns,
 			parentSize.y / rows
 		),
-		min_square_size
+		minSquareSize
 	)
 
 
@@ -114,7 +124,6 @@ func on_left_mouse_click(_event: InputEvent) -> void:
 
 		if col < columns and row < rows:
 			var creature = creatures.get_xy(col, row)
-			print(mousePos, " ", squareSize, " ", creature)
 
 			if creature == null: return
 
@@ -123,22 +132,27 @@ func on_left_mouse_click(_event: InputEvent) -> void:
 
 			target = creature
 			target.isSelected = true
+			_on_target_update.emit(target)
 
 
 func on_right_mouse_click(_event: InputEvent) -> void:
 	if target != null:
 		target.isSelected = false
 		target = null
+		_on_target_update.emit(target)
 
 
 func _draw() -> void:
 	print("draw")
 
+	var width = columns * squareSize
+	var height = rows * squareSize
+
 	# Background
 	draw_rect(
 		Rect2(
 			Vector2.ZERO,
-			Vector2(columns * squareSize, rows * squareSize)
+			Vector2(width, height)
 		),
 		backgroundColor
 	)
@@ -148,7 +162,7 @@ func _draw() -> void:
 		var rowOffset: float = r * squareSize
 		draw_line(
 			Vector2(0, rowOffset),
-			Vector2(columns * squareSize, rowOffset),
+			Vector2(width, rowOffset),
 			borderColor,
 			borderSize
 		)
@@ -158,7 +172,7 @@ func _draw() -> void:
 		var columnOffset: float = c * squareSize
 		draw_line(
 			Vector2(columnOffset, 0),
-			Vector2(columnOffset, rows * squareSize),
+			Vector2(columnOffset, height),
 			borderColor,
 			borderSize
 		)
@@ -175,6 +189,9 @@ func _on_tick(tickCount: int, isPreyTurn: bool) -> void:
 		_on_prey_tick.emit(tickCount)
 	else:
 		_on_pred_tick.emit(tickCount)
+
+	if target != null:
+		_on_target_update.emit(target)
 
 
 func _on_creature_reproduce(newPos, speciesName):

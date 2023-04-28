@@ -15,16 +15,8 @@ const gridSizes: Array[Vector2i] = [
 
 
 func _on_play_pressed() -> void:
-	set_global_greed_size()
-	set_global_seed()
+	Global.gridSize = gridSizes[optionsButton.selected]
+	Global.set_seed(seedEdit.text)
 
 	get_tree().change_scene_to_file("res://scenes/static/Game.tscn")
 
-
-func set_global_greed_size() -> void:
-	Global.gridSize = gridSizes[optionsButton.selected]
-
-
-func set_global_seed() -> void:
-	if !seedEdit.text.is_empty():
-		Global.gameSeed = seedEdit.text.strip_edges()

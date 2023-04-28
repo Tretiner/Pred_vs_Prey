@@ -2,7 +2,7 @@ class_name Folf
 extends Pred
 
 
-func _ready():
+func _init() -> void:
 	speciesName = "folf"
 
 
@@ -18,7 +18,7 @@ func hunt() -> bool:
 
 	if target is Prey:
 		var preyCoords = target.gridPos
-		hp += target.kill()
+		hp += target.kill("killed by " + speciesName)
 		parentBoard.swap(gridPos, preyCoords)
 		return true
 

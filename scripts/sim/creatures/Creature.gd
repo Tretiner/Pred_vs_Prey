@@ -17,21 +17,28 @@ var direction := Vector2i.ZERO
 
 var possibleMoves: Array[Vector2i] = []
 
+var isDead := false
+var deathDesc: String
+
+
 var gridPos := Vector2i.ZERO:
 	set(value):
 		gridPos = value
 		determine_grid_pos()
 
-var speciesName: String
-
-var points := 1.0
-
-var hp := 2.0
-
 var isSelected := false :
 	set(value):
 		isSelected = value
 		queue_redraw()
+
+
+var speciesName: String = "creature"
+var points := 1.0
+var hp := 2.0
+
+var curLifeTicks: int = 12
+var curGrowDelay: int
+var curReprDelay: int
 
 
 @onready var sprite: Sprite2D
@@ -57,13 +64,25 @@ func _draw():
 		)
 
 
+func get_stats_string() -> String:
+	var stats = ""
+	stats += "hp: %.1f\n" % hp
+	stats += "points: %.1f" % points
+	return stats
+
+
 func on_tick(tickCount):
+	if isDead: return
+
+	if curGrowDelay > 0: curGrowDelay -= 1
+	if curReprDelay > 0: curReprDelay -= 1
+
 	observe()
 
 
 func observe() -> void:
-	possibleMoves = []
 	directions.shuffle()
+	possibleMoves = []
 
 	for dir in directions:
 		var newMove = gridPos + dir
@@ -75,8 +94,6 @@ func observe() -> void:
 
 
 func move() -> void:
-	possibleMoves.shuffle()
-
 	for newPos in possibleMoves:
 		if gridPos == newPos or parentBoard.is_occupied(newPos):
 			continue
@@ -96,23 +113,24 @@ func reproduce(force: bool = false) -> void:
 		var creature = parentBoard.get_vect(newPos)
 		if force:
 			if creature != null:
-				hp += creature.kill()
+				hp += creature.kill("was forced to die")
 			_reproduce(newPos)
 			hp -= 100
-			break
+			return
 
 		if creature == null:
 			_reproduce(newPos)
-			break
+			return
 
 
 func _reproduce(newPos: Vector2i) -> void:
 	pass
 
 
-func kill() -> float:
+func kill(_deathDesc: String) -> float:
+	isDead = true
+	deathDesc = _deathDesc
 	_on_death.emit(self)
-	parentBoard = null
 	queue_free()
 	return points;
 

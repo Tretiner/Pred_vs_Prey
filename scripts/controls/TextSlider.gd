@@ -28,6 +28,10 @@ func _input(event):
 		text = template % value
 
 	elif event.is_action_pressed("ui_mouse_left"):
+		var mousePos = get_global_mouse_position()
+		if  mousePos.y > get_rect().position.y + get_rect().size.y + 10 or \
+			mousePos.y < get_rect().position.y:
+			return
 		_dragged = true
 		_preDragValue = value
 		on_drag_start.emit()

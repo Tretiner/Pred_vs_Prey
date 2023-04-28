@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://b0s4ekp1ncolh"]
+[gd_scene load_steps=14 format=3 uid="uid://b0s4ekp1ncolh"]
 
 [ext_resource type="Script" path="res://scripts/sim/SimRoot.gd" id="1_e6ukd"]
 [ext_resource type="Script" path="res://scripts/sim/Sim.gd" id="1_h2d5g"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://da1cjg7ba0pel" path="res://assets/images/ui/play.svg" id="5_w2fxw"]
 [ext_resource type="Texture2D" uid="uid://upuvtddq5aj1" path="res://assets/images/creatures/molf_disabled.svg" id="6_c8suv"]
 [ext_resource type="Script" path="res://scripts/controls/TextSlider.gd" id="10_peaj4"]
+[ext_resource type="Script" path="res://scripts/controls/StatsView.gd" id="11_ttmpr"]
 [ext_resource type="Texture2D" uid="uid://dty1cbe7ielpo" path="res://assets/images/ui/replay.svg" id="12_bdoby"]
 
 [node name="Root" type="MarginContainer"]
@@ -32,6 +33,8 @@ theme_override_constants/separation = 10
 [node name="Left" type="VBoxContainer" parent="UI"]
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 2
 theme_override_constants/separation = 10
 
 [node name="-1" type="HSeparator" parent="UI/Left"]
@@ -59,7 +62,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 0
 theme_override_fonts/font = ExtResource("2_c7xo8")
 theme_override_font_sizes/font_size = 16
-text = "Tick: 1"
+text = "Tick: 0"
 
 [node name="StepPanel" type="HBoxContainer" parent="UI/Left/TickPanel"]
 layout_mode = 2
@@ -67,6 +70,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 
 [node name="Prev" type="TextureButton" parent="UI/Left/TickPanel/StepPanel"]
+visible = false
 layout_mode = 2
 texture_normal = ExtResource("3_pytci")
 flip_h = true
@@ -111,6 +115,7 @@ texture_disabled = ExtResource("6_c8suv")
 
 [node name="-4" type="HSeparator" parent="UI/Left"]
 layout_mode = 2
+size_flags_vertical = 0
 
 [node name="SpeedSlider" type="Label" parent="UI/Left"]
 layout_mode = 2
@@ -128,6 +133,26 @@ pixelsPerPoint = 4.0
 [node name="-5" type="HSeparator" parent="UI/Left"]
 layout_mode = 2
 
+[node name="Control" type="Control" parent="UI/Left"]
+custom_minimum_size = Vector2(1.45519e-11, 10)
+layout_mode = 2
+
+[node name="StatsView" type="VBoxContainer" parent="UI/Left"]
+visible = false
+layout_mode = 2
+script = ExtResource("11_ttmpr")
+
+[node name="Name" type="Label" parent="UI/Left/StatsView"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("2_c7xo8")
+text = "folf"
+uppercase = true
+
+[node name="Stats" type="Label" parent="UI/Left/StatsView"]
+layout_mode = 2
+size_flags_horizontal = 4
+
 [node name="SimContainer" type="Control" parent="UI"]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -140,10 +165,13 @@ borderColor = Color(0.411765, 0.411765, 0.411765, 1)
 [node name="Right" type="VBoxContainer" parent="UI"]
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
 
-[node name="Button" type="TextureButton" parent="UI/Right"]
+[node name="Restart" type="TextureButton" parent="UI/Right"]
 layout_mode = 2
 size_flags_horizontal = 0
+size_flags_vertical = 0
 texture_normal = ExtResource("12_bdoby")
 
 [connection signal="on_tick" from="." to="UI/SimContainer/Sim" method="_on_tick"]
@@ -151,4 +179,5 @@ texture_normal = ExtResource("12_bdoby")
 [connection signal="pressed" from="UI/Left/TickPanel/StepPanel/Next" to="." method="_on_skip_next_pressed"]
 [connection signal="on_drag_end" from="UI/Left/SpeedSlider" to="." method="_on_speed_slider_on_drag_end"]
 [connection signal="resized" from="UI/SimContainer" to="UI/SimContainer/Sim" method="_on_game_resized"]
-[connection signal="pressed" from="UI/Right/Button" to="." method="_on_button_pressed"]
+[connection signal="_on_target_update" from="UI/SimContainer/Sim" to="UI/Left/StatsView" method="_on_sim__on_target_update"]
+[connection signal="pressed" from="UI/Right/Restart" to="." method="_on_restart_pressed"]

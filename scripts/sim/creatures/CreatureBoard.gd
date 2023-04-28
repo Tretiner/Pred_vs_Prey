@@ -2,7 +2,7 @@ class_name CreatureBoard
 extends Node
 
 
-var board = null # Array[Array[Creature]]
+var board: Array # Array[Array[Creature]]
 
 
 func init(rows: int, columns: int) -> void:
@@ -24,11 +24,10 @@ func swap(pos: Vector2i, newPos: Vector2i):
 	var p1 = get_vect(pos)
 	var p2 = get_vect(newPos)
 
-	set_vect(pos, p2)
 	set_vect(newPos, p1)
-
 	p1.gridPos = newPos
 
+	set_vect(pos, p2)
 	if p2 != null:
 		p2.gridPos = pos
 

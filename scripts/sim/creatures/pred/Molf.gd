@@ -2,13 +2,10 @@ class_name Molf
 extends Pred
 
 
-var reprDelay = 2
-var curDelay = reprDelay
-
-var foodToStartRepr = 5
+var foodToRepr = 5
 
 
-func _ready():
+func _init() -> void:
 	speciesName = "molf"
 
 
@@ -21,7 +18,10 @@ func hunt() -> bool:
 
 		if creature is Folf:
 			target = creature
-			if hp >= foodToStartRepr and target.hp >= foodToStartRepr:
+			if  hp > foodToRepr and \
+				target.hp > foodToRepr and \
+				curGrowDelay + curReprDelay == 0 and \
+				target.curGrowDelay + target.curReprDelay == 0:
 				break
 
 		if creature is Prey and creature.points > maxPoints:
@@ -30,7 +30,7 @@ func hunt() -> bool:
 
 	if target is Prey:
 			var preyCoords = target.gridPos
-			hp += target.kill()
+			hp += target.kill("killed by " + speciesName)
 			parentBoard.swap(gridPos, preyCoords)
 			return true
 	if target is Folf:
