@@ -7,24 +7,27 @@ func _init() -> void:
 
 
 func hunt() -> bool:
+	if curGrowDelay != 0:
+		return false
+
 	var maxPoints := 0
 	var target: Creature
 
 	for newPos in possibleMoves:
-		var c = parentBoard.get_vect(newPos)
-		if c is Prey and c.points > maxPoints:
-			maxPoints = c.points
-			target = c
+		var creature = parentBoard.get_vect(newPos)
+		if creature is Prey and creature.points > maxPoints:
+			maxPoints = creature.points
+			target = creature
 
 	if target is Prey:
-		var preyCoords = target.gridPos
 		hp += target.kill("killed by " + speciesName)
-		parentBoard.swap(gridPos, preyCoords)
+		parentBoard.swap(gridPos, target.gridPos)
 		return true
 
 	return false
 
 
 func _reproduce(newPos: Vector2i) -> void:
+	curReprDelay = Global.predReproduceDelay
 	var newSpecies = ["folf", "molf"].pick_random()
 	_on_reproduce.emit(newPos, newSpecies)

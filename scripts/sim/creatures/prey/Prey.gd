@@ -14,10 +14,13 @@ func on_tick(tickCount: int) -> void:
 
 	curLifeTicks -= 1
 	if curLifeTicks == 0:
-		kill("died of old age")
+		kill("Died due to old age")
 		return
 
-	reproduce()
+	if is_ready_to_repr():
+		reproduce()
+		curReprDelay = Global.preyReproduceDelay
+
 	move()
 
 

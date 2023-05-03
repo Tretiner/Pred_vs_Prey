@@ -77,9 +77,9 @@ func _on_start_stop_toggled(stopped: bool) -> void:
 
 
 func _on_skip_next_pressed():
-	ticks += 1
+	ticks += 0.5
 	_secondsLeft = curSecPerTick
-	_tick(ticks, 0)
+	_tick(ticks, int(ticks) == ticks)
 
 
 func _on_speed_slider_on_drag_end(value_changed: bool) -> void:
@@ -90,16 +90,21 @@ func _on_speed_slider_on_drag_end(value_changed: bool) -> void:
 	set_speed(speedSlider.value)
 
 
+func _on_graph_pressed():
+	_show_popup_by_name("SimResults")
+
+
 func _on_settings_pressed():
 	_show_popup_by_name("Settings")
+
+
+func _on_back_pressed():
+	get_tree().change_scene_to_file("res://scenes/static/MainMenu.tscn")
+
 
 func _on_restart_pressed():
 	Global.set_seed()
 	get_tree().reload_current_scene()
-
-
-func _on_graph_pressed():
-	_show_popup_by_name("SimResults")
 
 
 func _show_popup_by_name(popupName: String):

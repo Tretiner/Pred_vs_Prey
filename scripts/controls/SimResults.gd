@@ -33,10 +33,10 @@ func _draw():
 	set_data(StatsCollector.statsDict, get_window().size.y)
 
 	# In pixels on screen
-	var pixel_xmin = 0.0
-	var pixel_xmax = get_window().size.x
-	var pixel_ymin = get_window().size.y - 4
-	var pixel_ymax = 1.0
+	var pixel_xmin = 10.0
+	var pixel_xmax = get_window().size.x - 10
+	var pixel_ymin = get_window().size.y - 10
+	var pixel_ymax = 10.0
 
 	# Graph area
 	var xmin := 0
@@ -51,6 +51,7 @@ func _draw():
 	var lastX = 0
 	for pixelX in range(pixel_xmin, pixel_xmax):
 		var x = map(pixelX, pixel_xmin, pixel_xmax, xmin, xmax)
+
 		if lastX == x:
 			continue
 
@@ -60,7 +61,8 @@ func _draw():
 			draw_line(
 				Vector2(lastX, lastY),
 				Vector2(pixelX, pixelY),
-				graphs[graphName][1]
+				graphs[graphName][1],
+				2
 			)
 			graphs[graphName][0] = data[x][graphName]
 

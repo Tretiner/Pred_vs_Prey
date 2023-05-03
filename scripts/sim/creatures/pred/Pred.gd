@@ -3,6 +3,7 @@ extends Creature
 
 
 func _init():
+	curLifeTicks = 24
 	curGrowDelay = Global.predGrowDelay
 	curReprDelay = Global.predReproduceDelay
 
@@ -11,12 +12,14 @@ func on_tick(tickCount: int) -> void:
 	super(tickCount)
 	if isDead: return
 
-	if hp > 101 and curGrowDelay + curReprDelay == 0:
-		reproduce(true) # Critical situation
+	if hp > 101:
+		reproduce(true) # Критическая ситуация
 		return
 
-	if hunt():
-		return
+	if curGrowDelay == 0:
+		print("TIME TO HUNT %s" % gridPos)
+		if hunt():
+			return
 
 	hp -= 0.1
 	if hp <= 0.01:

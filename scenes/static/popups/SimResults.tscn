@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/controls/SimResults.gd" id="1_kcfoh"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jyoqr"]
-bg_color = Color(0.0862745, 0.0862745, 0.0862745, 0.768627)
+bg_color = Color(0.133333, 0.133333, 0.133333, 0.705882)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
@@ -11,14 +11,15 @@ corner_radius_bottom_left = 10
 
 [node name="SimResultsView" type="PopupPanel"]
 transparent_bg = true
+handle_input_locally = false
 gui_disable_input = true
+initial_position = 2
 size = Vector2i(500, 500)
 visible = true
+wrap_controls = false
+mouse_passthrough = true
+min_size = Vector2i(500, 500)
 theme_override_styles/panel = SubResource("StyleBoxFlat_jyoqr")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
-offset_right = 500.0
-offset_bottom = 500.0
-
-[node name="Node2D" type="Node2D" parent="MarginContainer"]
+[node name="Node2D" type="Node2D" parent="."]
 script = ExtResource("1_kcfoh")

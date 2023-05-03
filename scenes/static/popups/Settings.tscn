@@ -1,18 +1,26 @@
-[gd_scene format=3 uid="uid://d0s421t5xorx7"]
+[gd_scene load_steps=4 format=3 uid="uid://d0s421t5xorx7"]
+
+[ext_resource type="Script" path="res://scenes/static/popups/Settings.gd" id="1_sg170"]
+[ext_resource type="FontFile" uid="uid://c0l506j8o7l74" path="res://assets/fonts/Hardpixel-nn51.otf" id="2_06trc"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v3y7u"]
+bg_color = Color(0.133333, 0.133333, 0.133333, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
 [node name="Settings" type="PopupPanel"]
 initial_position = 2
-size = Vector2i(400, 400)
+size = Vector2i(371, 617)
 visible = true
+theme_override_styles/panel = SubResource("StyleBoxFlat_v3y7u")
+script = ExtResource("1_sg170")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="Margin" type="MarginContainer" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 4.0
-offset_top = 4.0
-offset_right = 396.0
-offset_bottom = 396.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 10
@@ -20,13 +28,247 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="GridContainer" type="GridContainer" parent="MarginContainer"]
+[node name="Options" type="VBoxContainer" parent="Margin"]
 layout_mode = 2
-columns = 2
+theme_override_constants/separation = 20
 
-[node name="Label" type="Label" parent="MarginContainer/GridContainer"]
+[node name="Global" type="VBoxContainer" parent="Margin/Options"]
 layout_mode = 2
 
-[node name="TextEdit" type="TextEdit" parent="MarginContainer/GridContainer"]
+[node name="Name" type="Label" parent="Margin/Options/Global"]
 layout_mode = 2
-placeholder_text = "кол-во зайцев"
+theme_override_fonts/font = ExtResource("2_06trc")
+text = "Global:"
+horizontal_alignment = 1
+
+[node name="SecondsPerTick" type="HBoxContainer" parent="Margin/Options/Global"]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="Margin/Options/Global/SecondsPerTick"]
+layout_mode = 2
+text = "Секунд за тик:"
+
+[node name="|" type="Control" parent="Margin/Options/Global/SecondsPerTick"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Spin" type="SpinBox" parent="Margin/Options/Global/SecondsPerTick"]
+layout_mode = 2
+min_value = 1.0
+max_value = 10.0
+step = 0.1
+value = 1.0
+
+[node name="Bunnies" type="VBoxContainer" parent="Margin/Options"]
+layout_mode = 2
+
+[node name="Option" type="Label" parent="Margin/Options/Bunnies"]
+layout_mode = 2
+text = "Bunny:"
+horizontal_alignment = 1
+
+[node name="Min" type="HBoxContainer" parent="Margin/Options/Bunnies"]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="Margin/Options/Bunnies/Min"]
+layout_mode = 2
+text = "Минимум:"
+
+[node name="|" type="Control" parent="Margin/Options/Bunnies/Min"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Spin" type="SpinBox" parent="Margin/Options/Bunnies/Min"]
+layout_mode = 2
+max_value = 100000.0
+value = 2.0
+
+[node name="Max" type="HBoxContainer" parent="Margin/Options/Bunnies"]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="Margin/Options/Bunnies/Max"]
+layout_mode = 2
+text = "Максимум:"
+
+[node name="|" type="Control" parent="Margin/Options/Bunnies/Max"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Spin" type="SpinBox" parent="Margin/Options/Bunnies/Max"]
+layout_mode = 2
+min_value = 1.0
+max_value = 100000.0
+value = 20.0
+
+[node name="ReprChance" type="HBoxContainer" parent="Margin/Options/Bunnies"]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="Margin/Options/Bunnies/ReprChance"]
+layout_mode = 2
+text = "Шанс размножения {X} к 10:"
+
+[node name="|" type="Control" parent="Margin/Options/Bunnies/ReprChance"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Spin" type="SpinBox" parent="Margin/Options/Bunnies/ReprChance"]
+layout_mode = 2
+max_value = 10.0
+value = 2.0
+
+[node name="ReprDelay" type="HBoxContainer" parent="Margin/Options/Bunnies"]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="Margin/Options/Bunnies/ReprDelay"]
+layout_mode = 2
+text = "Задержка после размножения:"
+
+[node name="|" type="Control" parent="Margin/Options/Bunnies/ReprDelay"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Spin" type="SpinBox" parent="Margin/Options/Bunnies/ReprDelay"]
+layout_mode = 2
+max_value = 1000.0
+value = 2.0
+
+[node name="Pred" type="VBoxContainer" parent="Margin/Options"]
+layout_mode = 2
+
+[node name="Option" type="Label" parent="Margin/Options/Pred"]
+layout_mode = 2
+text = "Pred:"
+horizontal_alignment = 1
+
+[node name="GrowDelay" type="HBoxContainer" parent="Margin/Options/Pred"]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="Margin/Options/Pred/GrowDelay"]
+layout_mode = 2
+text = "Взросление:"
+
+[node name="|" type="Control" parent="Margin/Options/Pred/GrowDelay"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Spin" type="SpinBox" parent="Margin/Options/Pred/GrowDelay"]
+layout_mode = 2
+max_value = 100000.0
+value = 2.0
+
+[node name="ReprDelay" type="HBoxContainer" parent="Margin/Options/Pred"]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="Margin/Options/Pred/ReprDelay"]
+layout_mode = 2
+text = "Задержка после размножения:"
+
+[node name="|" type="Control" parent="Margin/Options/Pred/ReprDelay"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Spin" type="SpinBox" parent="Margin/Options/Pred/ReprDelay"]
+layout_mode = 2
+max_value = 100000.0
+value = 2.0
+
+[node name="Molf" type="VBoxContainer" parent="Margin/Options"]
+layout_mode = 2
+
+[node name="Option" type="Label" parent="Margin/Options/Molf"]
+layout_mode = 2
+text = "Molf:"
+horizontal_alignment = 1
+
+[node name="Min" type="HBoxContainer" parent="Margin/Options/Molf"]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="Margin/Options/Molf/Min"]
+layout_mode = 2
+text = "Минимум:"
+
+[node name="|" type="Control" parent="Margin/Options/Molf/Min"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Spin" type="SpinBox" parent="Margin/Options/Molf/Min"]
+layout_mode = 2
+max_value = 100000.0
+value = 2.0
+
+[node name="Max" type="HBoxContainer" parent="Margin/Options/Molf"]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="Margin/Options/Molf/Max"]
+layout_mode = 2
+text = "Максимум:"
+
+[node name="|" type="Control" parent="Margin/Options/Molf/Max"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Spin" type="SpinBox" parent="Margin/Options/Molf/Max"]
+layout_mode = 2
+min_value = 1.0
+max_value = 100000.0
+value = 10.0
+
+[node name="Folf" type="VBoxContainer" parent="Margin/Options"]
+layout_mode = 2
+
+[node name="Option" type="Label" parent="Margin/Options/Folf"]
+layout_mode = 2
+text = "Folf:"
+horizontal_alignment = 1
+
+[node name="Min" type="HBoxContainer" parent="Margin/Options/Folf"]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="Margin/Options/Folf/Min"]
+layout_mode = 2
+text = "Минимум:"
+
+[node name="|" type="Control" parent="Margin/Options/Folf/Min"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Spin" type="SpinBox" parent="Margin/Options/Folf/Min"]
+layout_mode = 2
+max_value = 100000.0
+value = 2.0
+
+[node name="Max" type="HBoxContainer" parent="Margin/Options/Folf"]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="Margin/Options/Folf/Max"]
+layout_mode = 2
+text = "Максимум:"
+
+[node name="|" type="Control" parent="Margin/Options/Folf/Max"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Spin" type="SpinBox" parent="Margin/Options/Folf/Max"]
+layout_mode = 2
+min_value = 1.0
+max_value = 100000.0
+value = 10.0
+
+[node name="Label" type="Label" parent="Margin/Options/Folf"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.545098, 0.47451, 0.478431, 1)
+text = "Изменения применятся в 
+следующей симуляции"
+horizontal_alignment = 1
+
+[connection signal="value_changed" from="Margin/Options/Global/SecondsPerTick/Spin" to="." method="_on_secPerTick_changed"]
+[connection signal="value_changed" from="Margin/Options/Bunnies/Min/Spin" to="." method="_on_bunnyMin_changed"]
+[connection signal="value_changed" from="Margin/Options/Bunnies/Max/Spin" to="." method="_on_bunnyMax_changed"]
+[connection signal="value_changed" from="Margin/Options/Bunnies/ReprChance/Spin" to="." method="_on_reprChance_changed"]
+[connection signal="value_changed" from="Margin/Options/Bunnies/ReprDelay/Spin" to="." method="_on_reprDelay_changed"]
+[connection signal="value_changed" from="Margin/Options/Pred/GrowDelay/Spin" to="." method="_on_predGrowDelay_changed"]
+[connection signal="value_changed" from="Margin/Options/Pred/ReprDelay/Spin" to="." method="_on_predReprDelay_changed"]
+[connection signal="value_changed" from="Margin/Options/Molf/Min/Spin" to="." method="_on_molfMin_changed"]
+[connection signal="value_changed" from="Margin/Options/Molf/Max/Spin" to="." method="_on_molfMax_changed"]
+[connection signal="value_changed" from="Margin/Options/Folf/Min/Spin" to="." method="_on_folfMin_changed"]
+[connection signal="value_changed" from="Margin/Options/Folf/Max/Spin" to="." method="_on_folfMax_changed"]

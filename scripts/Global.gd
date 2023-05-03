@@ -7,17 +7,23 @@ var spriteSize := 32
 var spriteScaleModifier := 1.2
 var minSquareSize := 12.0
 
-var secondsPerTick := 2.0
+var secondsPerTick := 1.0
+
+var bunReprChance := 1
 
 var maxBunnies := 20
 var maxMolfs := 10
 var maxFolfs := 10
 
+var minBunnies := 8
+var minMolfs := 4
+var minFolfs := 4
+
 var preyGrowDelay := 2
 var preyReproduceDelay := 2
 
-var predGrowDelay := 2
-var predReproduceDelay := 2
+var predGrowDelay := 4
+var predReproduceDelay := 4
 
 var gridSize := Vector2i(20, 20)
 
@@ -35,11 +41,7 @@ func set_seed(s: String = "") -> void:
 
 
 func get_rand_str(length: int) -> String:
-	if length == 0:
-		return ""
-
 	var s := ""
 	for i in length:
 		s += char(randi_range(48, 122))
-
 	return s

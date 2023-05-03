@@ -23,7 +23,7 @@ var creaturesCount := 1
 @onready var squareSize := find_square_size()
 @onready var borderSize := 1
 
-@onready var creatures := CreatureBoard.new()
+@onready var creatures := CreaturesBoard.new()
 @onready var target: Creature = null
 
 @onready var creaturesDict = {
@@ -43,9 +43,9 @@ func _ready():
 
 	var creatureNames: Array[String] = []
 
-	var bunniesCount = randi_range(2, Global.maxBunnies)
-	var molfsCount = randi_range(2, Global.maxMolfs)
-	var folfsCount = randi_range(2, Global.maxFolfs)
+	var bunniesCount = randi_range(Global.minBunnies, Global.maxBunnies)
+	var molfsCount = randi_range(Global.minMolfs, Global.maxMolfs)
+	var folfsCount = randi_range(Global.minFolfs, Global.maxFolfs)
 
 	StatsCollector.reset(bunniesCount, molfsCount, folfsCount)
 

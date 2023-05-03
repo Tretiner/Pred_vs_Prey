@@ -8,4 +8,6 @@
 script = ExtResource("2_8tr4h")
 
 [node name="Sprite2D" parent="." index="0"]
+texture_filter = 0
+texture_repeat = 0
 texture = ExtResource("3_2rxp0")

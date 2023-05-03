@@ -20,6 +20,11 @@ config/icon="res://assets/images/app_icon/icon.svg"
 Global="*res://scripts/Global.gd"
 StatsCollector="*res://scripts/StatsCollector.gd"
 
+[display]
+
+window/size/viewport_width=960
+window/size/viewport_height=640
+
 [dotnet]
 
 project/assembly_name="Prey Pred Simulation"
@@ -28,6 +33,10 @@ project/assembly_name="Prey Pred Simulation"
 
 version_control/plugin_name="GitPlugin"
 version_control/autoload_on_startup=true
+
+[gui]
+
+theme/custom_font="res://assets/fonts/Hardpixel-nn51.otf"
 
 [input]
 
@@ -44,4 +53,5 @@ ui_mouse_right={
 
 [rendering]
 
+renderer/rendering_method="gl_compatibility"
 environment/defaults/default_clear_color=Color(0, 0, 0, 1)

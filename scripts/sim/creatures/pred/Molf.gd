@@ -10,34 +10,36 @@ func _init() -> void:
 
 
 func hunt() -> bool:
+	if curGrowDelay != 0:
+		return false
+
 	var maxPoints := 0
 	var target: Creature = null
 
 	for newPos in possibleMoves:
 		var creature = parentBoard.get_vect(newPos)
 
-		if creature is Folf:
+		if 	creature is Folf and \
+			hp > foodToRepr + 1 and \
+			creature.hp > foodToRepr + 1 and \
+			self.is_ready_to_repr() and \
+			creature.is_ready_to_repr():
 			target = creature
-			if  hp > foodToRepr and \
-				target.hp > foodToRepr and \
-				curGrowDelay + curReprDelay == 0 and \
-				target.curGrowDelay + target.curReprDelay == 0:
-				break
+			break
 
 		if creature is Prey and creature.points > maxPoints:
 			target = creature
 			maxPoints = target.points
 
 	if target is Prey:
-			var preyCoords = target.gridPos
-			hp += target.kill("killed by " + speciesName)
-			parentBoard.swap(gridPos, preyCoords)
-			return true
+		hp += target.kill("Killed by " + speciesName)
+		parentBoard.swap(gridPos, target.gridPos)
+		return true
+
 	if target is Folf and hp >= 1.1 and target.hp >= 1.1:
-			target.reproduce()
-			target.hp -= 1
-			hp -= 1
-			return true
+		target.reproduce()
+		target.hp -= foodToRepr
+		hp -= foodToRepr
 
 	return false
 
