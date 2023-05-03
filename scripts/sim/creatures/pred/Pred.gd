@@ -8,19 +8,23 @@ func _init():
 
 
 func on_tick(tickCount: int) -> void:
-	hp -= 0.1
-	if hp <= 0.01:
-		kill("died of starving")
+	super(tickCount)
+	if isDead: return
+
+	if hp > 101 and curGrowDelay + curReprDelay == 0:
+		reproduce(true) # Critical situation
 		return
 
-	super(tickCount)
+	if hunt():
+		return
 
-	if hp > 100 and curGrowDelay + curReprDelay == 0:
-		reproduce(true) # Critical situation
+	hp -= 0.1
+	if hp <= 0.01:
+		kill("Starved to death")
+		return
 
+	move()
 
-	elif !hunt():
-		move()
 
 func hunt() -> bool:
 	return false

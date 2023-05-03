@@ -12,7 +12,7 @@ func _on_sim__on_target_update(target: Creature) -> void:
 		return
 
 	if target.isDead:
-		lblName.text = '✞ '+ target.speciesName
+		lblName.text = target.speciesName + '✞'
 		lblStats.text = target.deathDesc
 	else:
 		lblName.text = target.speciesName

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://b0s4ekp1ncolh"]
+[gd_scene load_steps=16 format=3 uid="uid://b0s4ekp1ncolh"]
 
 [ext_resource type="Script" path="res://scripts/sim/SimRoot.gd" id="1_e6ukd"]
 [ext_resource type="Script" path="res://scripts/sim/Sim.gd" id="1_h2d5g"]
@@ -13,6 +13,8 @@
 [ext_resource type="Script" path="res://scripts/controls/TextSlider.gd" id="10_peaj4"]
 [ext_resource type="Script" path="res://scripts/controls/StatsView.gd" id="11_ttmpr"]
 [ext_resource type="Texture2D" uid="uid://dty1cbe7ielpo" path="res://assets/images/ui/replay.svg" id="12_bdoby"]
+[ext_resource type="Texture2D" uid="uid://codait62n6aav" path="res://assets/images/ui/settings.svg" id="13_3vlqv"]
+[ext_resource type="Texture2D" uid="uid://dmdgc5dt6bf3w" path="res://assets/images/ui/monitoring.svg" id="15_e0jo2"]
 
 [node name="Root" type="MarginContainer"]
 anchors_preset = 15
@@ -163,16 +165,29 @@ backgroundColor = Color(0, 0, 0, 0)
 borderColor = Color(0.411765, 0.411765, 0.411765, 1)
 
 [node name="Right" type="VBoxContainer" parent="UI"]
-custom_minimum_size = Vector2(120, 0)
+custom_minimum_size = Vector2(120, 1.45519e-11)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 
-[node name="Restart" type="TextureButton" parent="UI/Right"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Right"]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 2
+
+[node name="Restart" type="TextureButton" parent="UI/Right/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 texture_normal = ExtResource("12_bdoby")
+
+[node name="Graph" type="TextureButton" parent="UI/Right/HBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("15_e0jo2")
+
+[node name="Settings" type="TextureButton" parent="UI/Right/HBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("13_3vlqv")
 
 [connection signal="on_tick" from="." to="UI/SimContainer/Sim" method="_on_tick"]
 [connection signal="toggled" from="UI/Left/TickPanel/StepPanel/StartStop" to="." method="_on_start_stop_toggled"]
@@ -180,4 +195,6 @@ texture_normal = ExtResource("12_bdoby")
 [connection signal="on_drag_end" from="UI/Left/SpeedSlider" to="." method="_on_speed_slider_on_drag_end"]
 [connection signal="resized" from="UI/SimContainer" to="UI/SimContainer/Sim" method="_on_game_resized"]
 [connection signal="_on_target_update" from="UI/SimContainer/Sim" to="UI/Left/StatsView" method="_on_sim__on_target_update"]
-[connection signal="pressed" from="UI/Right/Restart" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="UI/Right/HBoxContainer/Restart" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="UI/Right/HBoxContainer/Graph" to="." method="_on_graph_pressed"]
+[connection signal="pressed" from="UI/Right/HBoxContainer/Settings" to="." method="_on_settings_pressed"]

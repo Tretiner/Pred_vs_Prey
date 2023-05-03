@@ -26,5 +26,5 @@ func hunt() -> bool:
 
 
 func _reproduce(newPos: Vector2i) -> void:
-	var newSpecies = ["folf", "molf"][randi_range(0, 1)]
+	var newSpecies = ["folf", "molf"].pick_random()
 	_on_reproduce.emit(newPos, newSpecies)

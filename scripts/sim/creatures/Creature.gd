@@ -46,13 +46,12 @@ var curReprDelay: int
 
 func init(board, row, column, sqrSize) -> void:
 	sprite = $Sprite2D
-
 	parentBoard = board
 	gridPos = Vector2i(row, column)
 	_on_board_resized(sqrSize)
 
 
-func _draw():
+func _draw() -> void:
 	if isSelected:
 		draw_rect(
 			Rect2(
@@ -96,16 +95,13 @@ func observe() -> void:
 func move() -> void:
 	for newPos in possibleMoves:
 		if gridPos == newPos or parentBoard.is_occupied(newPos):
-			continue
+			break
 
-#		print(gridPos, " -> ", newPos)
 		parentBoard.swap(gridPos, newPos)
 		break
 
 
 func reproduce(force: bool = false) -> void:
-	possibleMoves.shuffle()
-
 	for newPos in possibleMoves:
 		if gridPos == newPos:
 			continue
@@ -113,14 +109,13 @@ func reproduce(force: bool = false) -> void:
 		var creature = parentBoard.get_vect(newPos)
 		if force:
 			if creature != null:
-				hp += creature.kill("was forced to die")
-			_reproduce(newPos)
+				creature.kill("was forced to die")
 			hp -= 100
+			_reproduce(newPos)
 			return
 
-		if creature == null:
+		if creature == null and hp > 1:
 			_reproduce(newPos)
-			return
 
 
 func _reproduce(newPos: Vector2i) -> void:
@@ -140,7 +135,6 @@ func _generate_directions(rng: int = 1) -> Array[Vector2i]:
 	for x in range(-rng, rng+1):
 		for y in range(-rng, rng+1):
 			dirs.append(Vector2i(x, y))
-
 	return dirs
 
 
@@ -150,8 +144,6 @@ func _on_board_resized(sqrSize) -> void:
 	determine_grid_pos()
 	determine_sprite_scale()
 	center_sprite()
-
-	queue_redraw()
 
 
 func determine_grid_pos() -> void:

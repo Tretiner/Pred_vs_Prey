@@ -2,6 +2,7 @@ extends Control
 
 
 signal on_tick(tickCount: int, isPreyTurn: bool)
+signal on_refresh_results()
 
 
 var ticks := 0.0
@@ -13,6 +14,9 @@ var _secondsModidfier := 1.0
 
 var _gameStopped := false
 var _turnsEnabled := true
+
+
+var popups: Dictionary = {}
 
 
 @onready var seedLabel: Label = $"UI/Left/SeedLabel"
@@ -52,11 +56,15 @@ func _process(delta) -> void:
 
 
 func _tick(tickCount: int, isPreyTurn: bool) -> void:
-	tickLabel.text = "Tick: %d" % ticks
-	print("\n-- Tick: %d --" % ticks)
+	if not isPreyTurn:
+		tickLabel.text = "Tick: %d" % ticks
+		print("\n-- Tick: %d --" % ticks)
 
 	_set_turn(isPreyTurn)
 	on_tick.emit(ticks, isPreyTurn)
+
+	if not isPreyTurn:
+		print(StatsCollector.get_tick_stats(ticks))
 
 
 func _set_turn(isPreyTurn: bool) -> void:
@@ -82,6 +90,21 @@ func _on_speed_slider_on_drag_end(value_changed: bool) -> void:
 	set_speed(speedSlider.value)
 
 
+func _on_settings_pressed():
+	_show_popup_by_name("Settings")
+
 func _on_restart_pressed():
 	Global.set_seed()
-	get_tree().change_scene_to_file("res://scenes/static/Game.tscn")
+	get_tree().reload_current_scene()
+
+
+func _on_graph_pressed():
+	_show_popup_by_name("SimResults")
+
+
+func _show_popup_by_name(popupName: String):
+	if popupName not in popups:
+		print("res://scenes/static/popups/%s.tscn" % popupName)
+		popups[popupName] = load("res://scenes/static/popups/%s.tscn" % popupName).instantiate()
+		add_child(popups[popupName])
+	popups[popupName].show()

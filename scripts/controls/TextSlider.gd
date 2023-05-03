@@ -7,7 +7,7 @@ signal on_drag_start()
 signal on_drag_end(valueChanged: bool)
 
 
-@export var template: String = "< %.1f >"
+@export_multiline var template: String = "< %.1f >"
 
 @export var value: float = 1.0
 @export var minValue: float = 1.0
@@ -28,12 +28,13 @@ func _input(event):
 		text = template % value
 
 	elif event.is_action_pressed("ui_mouse_left"):
-		var mousePos = get_global_mouse_position()
-		if  mousePos.y > get_rect().position.y + get_rect().size.y + 10 or \
-			mousePos.y < get_rect().position.y:
+		var mousePos = get_local_mouse_position()
+		if  mousePos.x < 0 or mousePos.y < 0 or\
+			mousePos.x > size.x or mousePos.y > size.y:
 			return
-		_dragged = true
+
 		_preDragValue = value
+		_dragged = true
 		on_drag_start.emit()
 
 	elif event.is_action_released("ui_mouse_left"):

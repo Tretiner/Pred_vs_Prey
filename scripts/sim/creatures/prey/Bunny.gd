@@ -3,7 +3,7 @@ extends Prey
 
 
 func _init() -> void:
-	points = 0.5
+	points = 1
 	speciesName = "bunny"
 
 
@@ -12,6 +12,5 @@ func on_tick(tickCount: int) -> void:
 
 
 func _reproduce(newPos: Vector2i) -> void:
-	if randi_range(1, 10) > 2:
-		return
-	super(newPos)
+	if randi() % 10 < 2:
+		super(newPos)

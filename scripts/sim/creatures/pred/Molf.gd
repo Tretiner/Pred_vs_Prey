@@ -33,10 +33,15 @@ func hunt() -> bool:
 			hp += target.kill("killed by " + speciesName)
 			parentBoard.swap(gridPos, preyCoords)
 			return true
-	if target is Folf:
+	if target is Folf and hp >= 1.1 and target.hp >= 1.1:
 			target.reproduce()
 			target.hp -= 1
 			hp -= 1
 			return true
 
 	return false
+
+
+func _reproduce(newPos: Vector2i) -> void:
+	var newSpecies = ["folf", "molf"].pick_random()
+	_on_reproduce.emit(newPos, newSpecies)
