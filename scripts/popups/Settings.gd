@@ -42,43 +42,54 @@ func _ready():
 
 func _on_secPerTick_changed(value):
 	Global.secondsPerTick = value
+	SettingsFile.saveSettings()
 
 
 func _on_bunnyMin_changed(value):
 	Global.minBunnies = Global.maxBunnies - 1 if value >= Global.maxBunnies else value
+	SettingsFile.saveSettings()
 
 
 func _on_bunnyMax_changed(value):
 	Global.maxBunnies = value
+	SettingsFile.saveSettings()
 
 
 func _on_reprChance_changed(value):
 	Global.bunReprChance = value
+	SettingsFile.saveSettings()
 
 
 func _on_reprDelay_changed(value):
 	Global.preyReproduceDelay = value
+	SettingsFile.saveSettings()
 
 
 func _on_predGrowDelay_changed(value):
 	Global.predGrowDelay = value
+	SettingsFile.saveSettings()
 
 
 func _on_predReprDelay_changed(value):
 	Global.predReproduceDelay = value
+	SettingsFile.saveSettings()
 
 
 func _on_molfMin_changed(value):
 	Global.minMolfs = Global.maxMolfs - 1 if value >= Global.maxMolfs else value
+	SettingsFile.saveSettings()
 
 
 func _on_molfMax_changed(value):
 	Global.maxMolfs = value
+	SettingsFile.saveSettings()
 
 
 func _on_folfMin_changed(value):
 	Global.minFolfs = Global.maxFolfs - 1 if value >= Global.maxFolfs else value
+	SettingsFile.saveSettings()
 
 
 func _on_folfMax_changed(value):
 	Global.maxFolfs = value
+	SettingsFile.saveSettings()

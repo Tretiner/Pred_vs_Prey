@@ -1,10 +1,11 @@
-[gd_scene load_steps=17 format=3 uid="uid://b0s4ekp1ncolh"]
+[gd_scene load_steps=18 format=3 uid="uid://bomj3syuuikx4"]
 
 [ext_resource type="Script" path="res://scripts/sim/SimRoot.gd" id="1_e6ukd"]
 [ext_resource type="Script" path="res://scripts/sim/Sim.gd" id="1_h2d5g"]
 [ext_resource type="FontFile" uid="uid://c0l506j8o7l74" path="res://assets/fonts/Hardpixel-nn51.otf" id="2_c7xo8"]
 [ext_resource type="Texture2D" uid="uid://dynk26ey7fud6" path="res://assets/images/creatures/bunny.svg" id="3_i1lij"]
 [ext_resource type="Texture2D" uid="uid://dv07wg651vbm5" path="res://assets/images/ui/skip_next.svg" id="3_pytci"]
+[ext_resource type="Script" path="res://scripts/controls/ClickToCopyLabel.gd" id="3_qrio7"]
 [ext_resource type="Texture2D" uid="uid://dxqamyo0i38fg" path="res://assets/images/ui/pause.svg" id="4_c8gpu"]
 [ext_resource type="Texture2D" uid="uid://bxkvxa6ruesxe" path="res://assets/images/creatures/bunny_disabled.svg" id="4_ffype"]
 [ext_resource type="Texture2D" uid="uid://bqwueajceldej" path="res://assets/images/creatures/molf.svg" id="4_ukadd"]
@@ -48,10 +49,13 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
 tooltip_text = "Seed"
+mouse_filter = 1
+mouse_default_cursor_shape = 2
 theme_override_colors/font_color = Color(1, 1, 1, 0.470588)
 theme_override_fonts/font = ExtResource("2_c7xo8")
 theme_override_font_sizes/font_size = 14
 text = "RANDOM"
+script = ExtResource("3_qrio7")
 
 [node name="-2" type="HSeparator" parent="UI/Left"]
 layout_mode = 2

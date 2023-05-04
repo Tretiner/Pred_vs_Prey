@@ -14,6 +14,10 @@ const gridSizes: Array[Vector2i] = [
 @onready var seedEdit: LineEdit = $"VBoxContainer/VBoxContainer/SeedEdit"
 
 
+func _ready():
+	SettingsFile.loadSettings()
+
+
 func _on_play_pressed() -> void:
 	Global.gridSize = gridSizes[optionsButton.selected]
 	Global.set_seed(seedEdit.text)

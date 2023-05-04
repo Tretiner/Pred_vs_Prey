@@ -1,6 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://cwws8vguml1u2"]
+[gd_scene load_steps=3 format=3 uid="uid://dqj80t71mgkav"]
 
-[ext_resource type="Script" path="res://scripts/controls/SimResults.gd" id="1_kcfoh"]
+[ext_resource type="Script" path="res://scripts/popups/SimResults.gd" id="1_16d03"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jyoqr"]
 bg_color = Color(0.133333, 0.133333, 0.133333, 0.705882)
@@ -22,4 +22,4 @@ min_size = Vector2i(500, 500)
 theme_override_styles/panel = SubResource("StyleBoxFlat_jyoqr")
 
 [node name="Node2D" type="Node2D" parent="."]
-script = ExtResource("1_kcfoh")
+script = ExtResource("1_16d03")

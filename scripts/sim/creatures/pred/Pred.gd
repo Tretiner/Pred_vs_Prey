@@ -17,13 +17,12 @@ func on_tick(tickCount: int) -> void:
 		return
 
 	if curGrowDelay == 0:
-		print("TIME TO HUNT %s" % gridPos)
 		if hunt():
 			return
 
 	hp -= 0.1
 	if hp <= 0.01:
-		kill("Starved to death")
+		kill("Умерло от голода")
 		return
 
 	move()

@@ -43,6 +43,12 @@ func reset_tick_timer(newSecondsModifier: float) -> void:
 	_secondsLeft = curSecPerTick
 
 
+func _draw():
+	for popup in popups:
+		if popups[popup] != null and popups[popup].visible:
+			(popups[popup] as PopupPanel).popup_centered()
+
+
 func _process(delta) -> void:
 	if _gameStopped: return
 

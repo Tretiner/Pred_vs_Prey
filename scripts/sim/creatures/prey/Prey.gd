@@ -14,7 +14,7 @@ func on_tick(tickCount: int) -> void:
 
 	curLifeTicks -= 1
 	if curLifeTicks == 0:
-		kill("Died due to old age")
+		kill("Умерло из за старения")
 		return
 
 	if is_ready_to_repr():

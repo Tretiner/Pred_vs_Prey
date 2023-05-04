@@ -45,3 +45,21 @@ func get_rand_str(length: int) -> String:
 	for i in length:
 		s += char(randi_range(48, 122))
 	return s
+
+
+func sim_properties():
+	return {
+		"secondsPerTick" : secondsPerTick,
+		"bunReprChance" : bunReprChance,
+		"maxBunnies" : maxBunnies,
+		"maxMolfs" : maxMolfs,
+		"maxFolfs" : maxFolfs,
+		"minBunnies" : minBunnies,
+		"minMolfs" : maxMolfs,
+		"minFolfs" : maxFolfs,
+		"preyGrowDelay" : preyGrowDelay,
+		"preyReproduceDelay" : preyReproduceDelay,
+		"predGrowDelay" : predGrowDelay,
+		"predReproduceDelay" : predReproduceDelay
+	}
+
