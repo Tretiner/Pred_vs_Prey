@@ -32,7 +32,7 @@ func hunt() -> bool:
 			maxPoints = target.points
 
 	if target is Prey:
-		hp += target.kill("Killed by " + speciesName)
+		hp += target.kill("Убит " + speciesName)
 		parentBoard.swap(gridPos, target.gridPos)
 		return true
 

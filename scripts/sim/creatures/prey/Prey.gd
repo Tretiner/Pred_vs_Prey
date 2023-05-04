@@ -19,7 +19,6 @@ func on_tick(tickCount: int) -> void:
 
 	if is_ready_to_repr():
 		reproduce()
-		curReprDelay = Global.preyReproduceDelay
 
 	move()
 

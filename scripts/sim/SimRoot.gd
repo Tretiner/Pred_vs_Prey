@@ -58,19 +58,16 @@ func _process(delta) -> void:
 	ticks += 0.5
 	_secondsLeft += curSecPerTick
 
-	_tick(floor(ticks), int(ticks) == ticks)
+	var isPreyTurn = int(ticks) == ticks
+	_tick(floor(ticks), isPreyTurn)
 
 
 func _tick(tickCount: int, isPreyTurn: bool) -> void:
 	if not isPreyTurn:
 		tickLabel.text = "Tick: %d" % ticks
-		print("\n-- Tick: %d --" % ticks)
 
 	_set_turn(isPreyTurn)
 	on_tick.emit(ticks, isPreyTurn)
-
-	if not isPreyTurn:
-		print(StatsCollector.get_tick_stats(ticks))
 
 
 func _set_turn(isPreyTurn: bool) -> void:

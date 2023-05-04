@@ -12,8 +12,8 @@ var secondsPerTick := 1.0
 var bunReprChance := 1
 
 var maxBunnies := 20
-var maxMolfs := 10
-var maxFolfs := 10
+var maxMolfs := 6
+var maxFolfs := 6
 
 var minBunnies := 8
 var minMolfs := 4

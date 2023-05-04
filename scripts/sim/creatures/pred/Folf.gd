@@ -20,7 +20,7 @@ func hunt() -> bool:
 			target = creature
 
 	if target is Prey:
-		hp += target.kill("killed by " + speciesName)
+		hp += target.kill("Убит " + speciesName)
 		parentBoard.swap(gridPos, target.gridPos)
 		return true
 

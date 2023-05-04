@@ -2,22 +2,22 @@ class_name Creature
 extends CreatureSprite
 
 
-signal _on_reproduce(coords: Vector2, speciesName: String)
-signal _on_death(creature: Creature)
-
 
 var directions := _generate_directions(1)
 var direction := Vector2i.ZERO
 
 var possibleMoves: Array[Vector2i] = []
 
-var curLifeTicks: int
-var curGrowDelay: int
-var curReprDelay: int
+signal _on_reproduce(coords: Vector2, speciesName: String)
+signal _on_death(creature: Creature)
 
-var speciesName: String = "creature"
+var speciesName := "creature"
 var points := 1.0
 var hp := 2.0
+
+var curLifeTicks := 100
+var curGrowDelay := 12
+var curReprDelay := 12
 
 var isDead := false
 var deathDesc: String
@@ -25,8 +25,10 @@ var deathDesc: String
 
 func get_stats_string() -> String:
 	var stats = ""
-	stats += "hp: %.1f\n" % hp
-	stats += "points: %.1f" % points
+	stats += "Очки: %.1f\n" % points
+	stats += "Здоровье: %.1f\n" % hp
+	stats += "Взросл: %d\n" % curGrowDelay
+	stats += "Размнож: %d" % curReprDelay
 	return stats
 
 
@@ -53,7 +55,9 @@ func observe() -> void:
 
 
 func move() -> void:
-	var freeMoves = possibleMoves.filter(func(move): return parentBoard.is_not_occupied(move))
+	var freeMoves = possibleMoves.filter(func(move):
+		return parentBoard.is_not_occupied(move)
+	)
 
 	if freeMoves.size() == 0:
 		return
@@ -77,7 +81,7 @@ func reproduce(force: bool = false) -> void:
 		var creature = parentBoard.get_vect(newPos)
 		if force:
 			if creature != null:
-				creature.kill("Died due to bad luck")
+				creature.kill("Умер из за плохой удачи")
 			hp -= 100
 			_reproduce(newPos)
 			return
@@ -87,16 +91,16 @@ func reproduce(force: bool = false) -> void:
 			return
 
 
-func _reproduce(newPos: Vector2i) -> void:
-	pass
-
-
 func kill(_deathDesc: String) -> float:
 	isDead = true
 	deathDesc = _deathDesc
 	_on_death.emit(self)
 	queue_free()
 	return points;
+
+
+func _reproduce(newPos: Vector2i) -> void:
+	pass
 
 
 func _generate_directions(rng: int = 1) -> Array[Vector2i]:

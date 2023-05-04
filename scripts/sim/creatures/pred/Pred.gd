@@ -22,7 +22,7 @@ func on_tick(tickCount: int) -> void:
 
 	hp -= 0.1
 	if hp <= 0.01:
-		kill("Умерло от голода")
+		kill("Умер от голода")
 		return
 
 	move()
